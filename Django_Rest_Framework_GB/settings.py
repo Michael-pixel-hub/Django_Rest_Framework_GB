@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'authapp',
     'corsheaders',
-    'todo'
+    'todo',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
