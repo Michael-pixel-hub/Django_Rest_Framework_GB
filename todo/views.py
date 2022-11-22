@@ -39,6 +39,7 @@ class TodoModelViewSet(ModelViewSet):
     #     serializer = TodoModelSerializer(obj_list, many=True)
     #     return Response({'note': serializer.data})
 
+
     def destroy(self, request, *args, **kwargs):
         serializer = TodoModelSerializer(
             instance=Todo.objects.get(pk=kwargs['pk']),
