@@ -1,6 +1,6 @@
 import React from "react";
 
-const FooterItem = ({footer}) => {
+const FooterItem = () => {
     return (
         <div>
             Тут будет падвал

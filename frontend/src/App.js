@@ -1,8 +1,12 @@
 import React from "react";
 import './logo.svg';
 import './App.css';
-import UsersList from './components/Users.js'
+import UsersList from './components/Users.js';
+import NotesList from './components/Todo.js';
+import ProjectsList from "./components/Projects.js";
 import axios from "axios";
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import NotFound from "./components/NotFound";
 import MenuItem from "./components/Menu";
 import FooterItem from "./components/Footer";
 
@@ -10,8 +14,11 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'users': []
+            'users': [],
+            'notes': [],
+            'projects': [],
         }
+
     }
 
     componentDidMount() {
@@ -21,46 +28,54 @@ class App extends React.Component {
                 const users = response.data
                 this.setState(
                     {
-                        'users': users,
-                        'menu': {'dsf': 'sss'},
-                        'footer': {'sdfsf': 222}
+                        'users': users.results,
                     }
                 )
+
             }).catch(error => console.log(error))
 
-        // const users = [
-        //     {
-        //         'first_name': 'Фёдор',
-        //         'last_name': 'Достоевский',
-        //         'email': 'sudoaptinstall@gmail.com',
-        //         'username': 'ftdor'
-        //     },
-        //     {
-        //         'first_name': 'Александр',
-        //         'last_name': 'Грин',
-        //         'email': 'get@gmail.com',
-        //         'username': 'ffffdddd'
-        //     },
-        // ]
-        // this.setState(
-        //     {
-        //         'users': users
-        //     }
-        // )
+        axios.get('http://127.0.0.1:8000/api/todo/')
+            .then(response => {
+                const notes = response.data
+                this.setState(
+                    {
+                        'notes': notes.results,
+                    }
+                )
+
+            }).catch(error => console.log(error))
+
+        axios.get('http://127.0.0.1:8000/api/projects/')
+            .then(response => {
+                const projects = response.data
+                this.setState(
+                    {
+                        'projects': projects.results,
+                    }
+                )
+
+            }).catch(error => console.log(error))
 
     }
-
 
     render() {
         return (
             <div>
-                <MenuItem/>
-                <UsersList users={this.state.users}/>
-                <FooterItem/>
+                <BrowserRouter>
+                    <MenuItem/>
+                    <Routes>
+                        <Route path='/' element={<UsersList users={this.state.users}/>}/>
+                        <Route path='/todo' element={<NotesList notes={this.state.notes}/>}/>
+                        <Route path='/projects' element={<ProjectsList projects={this.state.projects}/>}/>
+                        <Route path='*' element={<NotFound/>}/>
+                    </Routes>
+                    <FooterItem/>
+                </BrowserRouter>
             </div>
         )
     }
 }
+
 
 export default App;
 
