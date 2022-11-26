@@ -9,7 +9,15 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
+class TodoModelSerializerBase(ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = '__all__'
+
+
 class TodoModelSerializer(ModelSerializer):
+    project = ProjectModelSerializer
+
     class Meta:
         model = Todo
         fields = '__all__'
