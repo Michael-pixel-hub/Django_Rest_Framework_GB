@@ -22,6 +22,7 @@ from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
+from graphene_django.views import GraphQLView
 
 router = DefaultRouter()
 router.register('users', UserModelViewSet)
@@ -49,4 +50,5 @@ urlpatterns = [
     path('api_token/', views.obtain_auth_token),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('graphql/', GraphQLView.as_view(graphiql=True))
 ]
