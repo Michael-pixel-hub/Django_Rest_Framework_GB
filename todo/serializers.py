@@ -6,7 +6,7 @@ from rest_framework import serializers
 class ProjectModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['id', 'name_project', 'link_repo', 'users_project']
 
 
 class TodoModelSerializerBase(ModelSerializer):
